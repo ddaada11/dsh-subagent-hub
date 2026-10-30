@@ -57,7 +57,8 @@ plugin_manager(action="install_bundle", target="<克隆下来的目录绝对路�
 装完刷新页面，工具行左侧出现 `🧩 子代理`。
 
 - 改 Host 代码（`lib/index.js` / `lib/api.js`）后热重载：`plugin_manager set_plugin(target="include:subagent-hub", enabled=false)` 再 `enabled=true`。
-- 改客户端代码（`lib/client.js`）刷新页面即可。
+- 改客户端代码（`lib/client.js`）后按 **Ctrl+Shift+R** 硬刷新（插件产物 URL 带 `?rev=`，普通刷新可能命中浏览器缓存，看到的是旧面板）。
+- 面板标题旁的版本角标（如 `v0.3.0`）就是当前加载的客户端版本，对不上就是还没刷到新包。
 - 卸载：`plugin_manager remove_bundle`。
 
 要求：profile 里启用了 **Agent Teams**（`dsh-experimental-agent-team-profile`）。没启用时面板会明确提示，而不是静默失效。
@@ -96,7 +97,7 @@ test/smoke.mjs        渲染冒烟（迷你 React + fake DOM，不需要浏览�
 node test/smoke.mjs
 ```
 
-40 项断言：模块注册、slot 注册、面板渲染、成员 / 任务展示、模板套用与隐藏恢复、插入输入框、localStorage 写入。
+42 项断言：模块注册、slot 注册、面板渲染、成员 / 任务展示、派生模板与任务模板、套用与隐藏恢复、插入输入框、localStorage 写入、版本角标。
 
 ## 约定
 
