@@ -137,7 +137,7 @@ assert(tree.children[1] !== undefined, '面板节点已挂载')
 
 // ---- refresh -> members + tasks -----------------------------------------
 const head = tree.children[1].children[0]
-const refresh = head.children[2]
+const refresh = head.children.find((child) => child && child.props && child.props.title === '刷新')
 await refresh.props.onClick()
 await tick()
 tree = render()
@@ -207,6 +207,10 @@ assert(taskSave !== undefined, '任务表单也有「存为模板」')
 taskSave.props.onClick()
 tree = render()
 assert(String(sandbox.window.localStorage.getItem('dsh-subagent-hub.task-presets')).includes('修复：'), '任务模板写入 localStorage')
+
+// ---- 版本角标与两条模板条 ------------------------------------------------
+assert(flatten(tree).some((text) => text === 'v0.3.0'), '面板显示版本角标 v0.3.0')
+assert(flatten(tree).filter((text) => text === '模板').length === 2, '派生表单和任务表单各有一条「模板」标签')
 
 console.log('\n全部断言通过 ✅')
 
